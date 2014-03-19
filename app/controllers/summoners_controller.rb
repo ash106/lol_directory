@@ -50,6 +50,20 @@ class SummonersController < ApplicationController
           end
         end
       end
+
+      search_string = "https://community-league-of-legends.p.mashape.com/api/v1.0/#{server}/summoner/retrieveTopPlayedChampions/#{@summoner.acct_id}"
+      response = Unirest.get(search_string)
+
+      if response.code == 200
+        @summoner.most_played = {}
+        response.body["array"].each do |value|
+          value["stats"]["array"].each do |stat|
+            if stat["statType"] == "TOTAL_SESSIONS_PLAYED"
+              @summoner.most_played["#{stat["championId"]}"] = "#{stat["value"]}"
+            end
+          end
+        end
+      end
     end
 
     respond_to do |format|
@@ -95,7 +109,7 @@ class SummonersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def summoner_params
-      params.require(:summoner).permit(:name, :server, :icon_id, :riot_id, :acct_id, :user_id)
+      params.require(:summoner).permit(:name, :server, :icon_id, :riot_id, :acct_id, :user_id, :league, { most_played: [] })
     end
 
     def set_unirest_header

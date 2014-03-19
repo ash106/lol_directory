@@ -8,6 +8,7 @@ table
     th Riot
     th Acct
     th League
+    th Most played
     th User
     th
     th
@@ -21,6 +22,7 @@ table
       td = summoner.riot_id
       td = summoner.acct_id
       td = summoner.league
+      td = summoner.most_played
       td = summoner.user.name
       td = link_to 'Show', summoner
       td = link_to 'Edit', edit_summoner_path(summoner)
