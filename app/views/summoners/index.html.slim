@@ -9,6 +9,7 @@ table
     th Acct
     th League
     th Most played
+    th Honor
     th User
     th
     th
@@ -23,6 +24,7 @@ table
       td = summoner.acct_id
       td = summoner.league
       td = summoner.most_played
+      td = summoner.honor
       td = summoner.user.name
       td = link_to 'Show', summoner
       td = link_to 'Edit', edit_summoner_path(summoner)

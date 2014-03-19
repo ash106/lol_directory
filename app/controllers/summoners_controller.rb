@@ -64,6 +64,13 @@ class SummonersController < ApplicationController
           end
         end
       end
+
+      search_string = "https://community-league-of-legends.p.mashape.com/api/v1.0/#{server}/summoner/getSummonerHonor/#{@summoner.acct_id}"
+      response = Unirest.get(search_string)
+
+      if response.code == 200
+        @summoner.honor = response.body
+      end
     end
 
     respond_to do |format|
@@ -109,7 +116,7 @@ class SummonersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def summoner_params
-      params.require(:summoner).permit(:name, :server, :icon_id, :riot_id, :acct_id, :user_id, :league, { most_played: [] })
+      params.require(:summoner).permit(:name, :server, :icon_id, :riot_id, :acct_id, :user_id, :league, :most_played, :honor)
     end
 
     def set_unirest_header

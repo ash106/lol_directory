@@ -22,8 +22,11 @@ p
   strong Most played:
   = @summoner.most_played
 p
+  strong Honor:
+  = @summoner.honor
+p
   strong User:
-  = @summoner.user
+  = @summoner.user.name
 
 = link_to 'Edit', edit_summoner_path(@summoner)
 '|
